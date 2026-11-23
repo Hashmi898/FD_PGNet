@@ -22,46 +22,63 @@ FDPGNet_Project/
 └── README.md
 ```
 
-## Installation
 
-```bash
-pip install -r requirements.txt
-```
+## Usage1 if you are using kaggle
+1) Step one just download ZIP File
+2) Upload the Zip file on kaggle.
+3) Turn on the GPU
+4) Run this Command (also check you file directory)
+      from pathlib import Path
+      import shutil
+      import zipfile
+      import os
+      
+      input_dir = Path("/kaggle/input")
+      project_files = list(input_dir.rglob("Main.py"))
+      
+      # Extract the upload if Kaggle has kept it as a ZIP.
+      if not project_files:
+          extract_dir = Path("/kaggle/working/project_upload")
+          for archive in input_dir.rglob("*.zip"):
+              with zipfile.ZipFile(archive) as z:
+                  z.extractall(extract_dir)
+          project_files = list(extract_dir.rglob("Main.py"))
+      
+      if len(project_files) != 1:
+          raise RuntimeError(
+              f"Found {len(project_files)} Main.py files. "
+              "Attach only the intended project dataset and check its files."
+          )
+      
+      project_dir = Path("/kaggle/working/FD_PGNet")
+      shutil.copytree(project_files[0].parent, project_dir, dirs_exist_ok=True)
+      os.chdir(project_dir)
+      
+      print("Project folder:", project_dir)
+      print("Files:", os.listdir())
+5)Run the last command:
+      %cd /kaggle/working/FD_PGNet
+      !python -u Main.py
 
-To use a GPU, install the PyTorch build that matches your CUDA version from
-https://pytorch.org/.
 
-## Usage
+## Usage2 if you have a GPU Directly.
+1) Local GPU execution: Install the required dependencies and a compatible CUDA-enabled PyTorch build, then run python Main.py from the project directory.
 
-Run all commands from the project root, the folder that contains `Main.py`.
 
-```bash
-python Main.py --self-check-only                      # model / operator consistency checks
-python Main.py --bounds-only                          # LS, LMMSE, oracle and exact-MMSE references
-python Main.py --profile smoke --device cpu           # fast end-to-end test run
-python Main.py --profile quick --device cpu
-python Main.py --profile paper --device cuda          # full-scale run
-python Main.py --profile paper --device cpu --cpu-threads 4
-```
-
-Useful options: `--retrain`, `--no-bounds`, `--no-latency-benchmark`,
-`--posterior-mode {exact,cg}`, `--training-snr-mode {per_snr,shared}`,
-`--output-dir`, `--checkpoint-dir`.
-
-From a Jupyter notebook opened in the project root:
-
-```python
-from Main import run
-results = run(profile="quick", device="cuda")
-```
 
 ## Outputs
-
 Written to `fdpgnet_v2_output/` by default:
-
 - `fdpgnet_v2_results.csv` / `.npz`: NMSE, counted BER, bit errors and the bounds for each SNR
 - `fdpgnet_v2_nmse_ber.png`: NMSE and BER figure
 - `complexity_report.json`, `implementation_assumptions.json`
 
 Trained models are saved in `fdpgnet_v2_checkpoints/` and reused on later
 runs unless you pass `--retrain`.
+
+
+<img width="1920" height="1440" alt="fdpgnet_nmse_vs_snr (1)" src="https://github.com/user-attachments/assets/a04f196d-7ade-45ba-adf5-42ca0184c6de" />
+<img width="1920" height="1440" alt="fdpgnet_ber_vs_snr" src="https://github.com/user-attachments/assets/66492e8d-0273-47d4-a7c3-3a3f02c62a39" />
+
+
+
+
