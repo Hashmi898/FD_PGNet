@@ -26,7 +26,7 @@ FDPGNet_Project/
 ## Usage1 if you are using kaggle
 1) Step one just download ZIP File
 2) Upload the Zip file on kaggle.
-3) Turn on the GPU
+3) Turn on the GPU 
 4) Run this Command (also check you file directory)
       from pathlib import Path
       import shutil
