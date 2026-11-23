@@ -23,47 +23,61 @@ FDPGNet_Project/
 ```
 
 
-## Usage1 if you are using kaggle
-1) Step one just download ZIP File
-2) Upload the Zip file on kaggle.
-3) Turn on the GPU 
-4) Run this Command (also check you file directory)
-      from pathlib import Path
-      import shutil
-      import zipfile
-      import os
-      
-      input_dir = Path("/kaggle/input")
-      project_files = list(input_dir.rglob("Main.py"))
-      
-      # Extract the upload if Kaggle has kept it as a ZIP.
-      if not project_files:
-          extract_dir = Path("/kaggle/working/project_upload")
-          for archive in input_dir.rglob("*.zip"):
-              with zipfile.ZipFile(archive) as z:
-                  z.extractall(extract_dir)
-          project_files = list(extract_dir.rglob("Main.py"))
-      
-      if len(project_files) != 1:
-          raise RuntimeError(
-              f"Found {len(project_files)} Main.py files. "
-              "Attach only the intended project dataset and check its files."
-          )
-      
-      project_dir = Path("/kaggle/working/FD_PGNet")
-      shutil.copytree(project_files[0].parent, project_dir, dirs_exist_ok=True)
-      os.chdir(project_dir)
-      
-      print("Project folder:", project_dir)
-      print("Files:", os.listdir())
+## Usage
 
-5)Run the last command:
-     %cd /kaggle/working/FD_PGNet
-     !python -u Main.py
+### Option 1: Kaggle
+1. Download this repository as a ZIP file (Code → Download ZIP).
+2. Upload the ZIP to Kaggle as a dataset and attach it to a notebook.
+3. Turn on the GPU accelerator.
+4. Run this in the first cell:
 
+```python
+from pathlib import Path
+import shutil
+import zipfile
+import os
 
-## Usage2 if you have a GPU Directly.
-1) Local GPU execution: Install the required dependencies and a compatible CUDA-enabled PyTorch build, then run python Main.py from the project directory.
+input_dir = Path("/kaggle/input")
+project_files = list(input_dir.rglob("Main.py"))
+
+# Extract the upload if Kaggle has kept it as a ZIP.
+if not project_files:
+    extract_dir = Path("/kaggle/working/project_upload")
+    for archive in input_dir.rglob("*.zip"):
+        with zipfile.ZipFile(archive) as z:
+            z.extractall(extract_dir)
+    project_files = list(extract_dir.rglob("Main.py"))
+
+if len(project_files) != 1:
+    raise RuntimeError(
+        f"Found {len(project_files)} Main.py files. "
+        "Attach only the intended project dataset and check its files."
+    )
+
+project_dir = Path("/kaggle/working/FD_PGNet")
+shutil.copytree(project_files[0].parent, project_dir, dirs_exist_ok=True)
+os.chdir(project_dir)
+
+print("Project folder:", project_dir)
+print("Files:", os.listdir())
+```
+
+5. Run this in the second cell:
+
+```python
+%cd /kaggle/working/FD_PGNet
+!python -u Main.py
+```
+
+### Option 2: Local GPU
+Install the dependencies and a CUDA-enabled PyTorch build, then run from the project folder:
+
+```bash
+pip install -r requirements.txt
+python Main.py
+```
+
+`python Main.py` reproduces the paper settings. `--profile quick` and `--profile smoke` are short test runs.
 
 
 
