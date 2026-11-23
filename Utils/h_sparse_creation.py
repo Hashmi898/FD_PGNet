@@ -1,15 +1,6 @@
 """Sparse delay-Doppler channel ``h`` creation (fractional-Doppler OTFS).
 
-Moved verbatim from the original single-file FD-PGNet v2 script.
-
-Contents
---------
-FractionalChannelBatch                  physical paths + equivalent sparse h
-dirichlet_coefficient                   fractional-Doppler leakage eta(q, kappa)
-physical_paths_to_sparse_h              physical paths -> Q-truncated sparse h
-generate_physical_fractional_channels   random physical channels and their h
-_path_atom, _path_atoms_batch           sparse-h response of one unit-gain path
-complex_noise                           circularly-symmetric complex AWGN
+  
 """
 
 from __future__ import annotations
