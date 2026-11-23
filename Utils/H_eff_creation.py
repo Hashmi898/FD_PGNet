@@ -1,15 +1,4 @@
-"""Effective DD-domain channel matrix / operator ``H_eff`` creation.
 
-Moved verbatim from the original single-file FD-PGNet v2 script.
-
-Contents
---------
-_dd_grid_to_vec, _dd_vec_to_grid        MATLAB-style column-major vec / unvec
-build_Heff_from_hhat_fractional         explicit H_eff from a sparse h estimate
-build_Heff_from_physical_fractional     explicit H_eff from physical paths, Eq. (2)
-apply_dd_channel                        matrix-free H_eff(h) x and its adjoint
-apply_physical_fractional_channel       matrix-free physical-path channel, Eq. (2)
-"""
 
 from __future__ import annotations
 
