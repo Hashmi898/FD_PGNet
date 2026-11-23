@@ -73,13 +73,12 @@ class Config:
     test_frames_per_snr: int = 3_000
     adam_lr: float = 5.0e-3
 
-    # PnP pilot geometry. Every pilot and active data symbol has unit energy.
-    # No pilot multiplier, energy ratio, boost, or power reallocation exists.
+
     pilot_delay_len: int = 2
     pilot_doppler_len: int = 2
     pilot_energy: float = 1.0
 
-    # Reproduction assumptions because the DRSNN article omits these values
+    
     Q: int = 1
     validation_samples: int = 3_000
     epochs: int = 12
@@ -235,33 +234,6 @@ def resolve_device(requested: str, torch):
         raise RuntimeError("CUDA requested, but torch.cuda.is_available() is false.")
     return device
 
-
-# -----------------------------------------------------------------------------
-# Achievability limits for this exact pilot, channel and SNR definition
-# -----------------------------------------------------------------------------
-#
-# Reviewers ask "how good is good?". These references answer it. All of them
-# use the same Phi, the same channel law and the same aggregate NMSE as the
-# Monte-Carlo evaluator, so they can be plotted on the same axes.
-#
-#   ls_pinv                 Moore-Penrose LS, sigma^2 tr(G^-1) / E||h||^2.
-#   lmmse_marginal          LMMSE with the exact per-tap marginal prior and NO
-#                           sparsity. A free, surprisingly strong baseline that
-#                           any proposed estimator must beat convincingly.
-#   oracle_support          A genie reveals which taps are non-zero and their
-#                           per-tap prior variance. Unstructured lower bound.
-#   oracle_parameter        A genie reveals (delay, integer Doppler, kappa) of
-#                           every path; only the P complex gains are estimated.
-#                           Lower bound for ANY manifold-exploiting estimator.
-#   exact_mmse              The true Bayesian MMSE, by importance sampling from
-#                           the exact prior. Valid only while the effective
-#                           sample size stays large, i.e. at low SNR, which is
-#                           precisely where the genie bounds are loosest and
-#                           most often misread as attainable.
-#
-# The genie curves are NOT attainable at low SNR: the support cannot be
-# resolved there. exact_mmse is the honest low-SNR reference.
-# -----------------------------------------------------------------------------
 
 
 def _tap_prior_variance(cfg: Config, channel: FractionalChannelBatch) -> np.ndarray:
