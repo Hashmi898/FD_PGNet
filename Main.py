@@ -587,8 +587,9 @@ def run_self_checks(cfg: Config, design: PilotDesign) -> None:
     )
     dense_y = detector_y[:1] + dense_noise
     dense_h = detector_h[:1]
+    tight_cfg = replace(cfg, lmmse_cg_tolerance=1.0e-12, lmmse_cg_iterations=2000)
     cg_solution = lmmse_equalize(
-        dense_y, dense_h, design, cfg, noise_variance=dense_variance
+        dense_y, dense_h, design, tight_cfg, noise_variance=dense_variance
     )
 
     H_dense = build_Heff_from_hhat_fractional(
