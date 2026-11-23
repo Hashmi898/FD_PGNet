@@ -56,9 +56,10 @@ FDPGNet_Project/
       
       print("Project folder:", project_dir)
       print("Files:", os.listdir())
+
 5)Run the last command:
-      %cd /kaggle/working/FD_PGNet
-      !python -u Main.py
+     %cd /kaggle/working/FD_PGNet
+     !python -u Main.py
 
 
 ## Usage2 if you have a GPU Directly.
