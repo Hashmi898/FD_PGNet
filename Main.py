@@ -82,7 +82,7 @@ class Config:
     # Reproduction assumptions because the DRSNN article omits these values
     Q: int = 1
     validation_samples: int = 3_000
-    epochs: int = 12
+    epochs: int = 100
     batch_size: int = 256
 
     # ---------------- FD-PGNet v2 ----------------
@@ -121,8 +121,8 @@ class Config:
 
     # Execution controls
     eval_batch_size: int = 100
-    lmmse_cg_iterations: int = 400
-    lmmse_cg_tolerance: float = 1.0e-8
+    lmmse_cg_iterations: int = 200
+    lmmse_cg_tolerance: float = 1.0e-6
     # 3,000 test frames at every SNR (scale factor 1 everywhere).
     ber_frame_scale: Tuple[Tuple[int, int], ...] = (
         (0, 1), (5, 1), (10, 1), (15, 1), (20, 1), (25, 1), (30, 1),
