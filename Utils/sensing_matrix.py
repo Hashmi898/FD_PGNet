@@ -1,13 +1,4 @@
-"""PnP embedded pilot design and the DRSNN sensing matrix ``Phi``.
 
-Moved verbatim from the original single-file FD-PGNet v2 script.
-
-Contents
---------
-PilotDesign          pilot / guard / data masks, Phi and its pseudoinverse
-make_pilot_design    builds the 2 x 2 unit-energy pilot, zero guards and Phi
-coarse_ls            DRSNN Eq. (8): LS estimate h = pinv(Phi) y
-"""
 
 from __future__ import annotations
 
