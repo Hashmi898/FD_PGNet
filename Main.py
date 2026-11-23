@@ -60,7 +60,7 @@ from Data_Detection.lmmse_detector import lmmse_equalize
 
 @dataclass(frozen=True)
 class Config:
-    # Values stated by the DRSNN paper
+    # Values stated 
     M: int = 24
     N: int = 20
     paths: int = 4
